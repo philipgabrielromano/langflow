@@ -1,7 +1,7 @@
 FROM langflowai/langflow:latest
 
 USER root
-RUN pip install --no-cache-dir pymysql mysql-connector-python snowflake-connector-python langchain-pinecone
+RUN pip install --no-cache-dir pymysql mysql-connector-python snowflake-connector-python langchain-pinecone matplotlib seaborn pandas
 USER user
 
 # Add the system site-packages path that's missing from the venv
