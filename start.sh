@@ -12,8 +12,11 @@ pip install --user --no-cache-dir \
     pandas \
     cryptography
 
-echo "Setting Python path..."
-export PYTHONPATH="$(python3 -c 'import site; print(site.getusersitepackages())'):$PYTHONPATH"
+echo "Setting correct Python path..."
+export PYTHONPATH="/app/data/.local/lib/python3.12/site-packages:${PYTHONPATH}"
+
+echo "Testing imports..."
+python3 -c "import matplotlib; import pymysql; print('All packages imported successfully')"
 
 echo "Starting Langflow..."
 exec langflow run --host 0.0.0.0 --port 7860
