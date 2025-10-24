@@ -1,10 +1,9 @@
 FROM langflowai/langflow:latest
 
-# Install as user to ensure packages are in the right location
-USER user
-
-# Install to user site-packages
-RUN pip install --user --no-cache-dir \
+# Create a startup script
+USER root
+RUN echo '#!/bin/bash\n\
+pip install --user --no-cache-dir \
     pymysql \
     mysql-connector-python \
     snowflake-connector-python[pandas] \
@@ -12,10 +11,9 @@ RUN pip install --user --no-cache-dir \
     matplotlib \
     seaborn \
     pandas \
-    cryptography
+    cryptography\n\
+exec langflow run --host 0.0.0.0 --port 7860' > /startup.sh && \
+    chmod +x /startup.sh
 
-# Ensure user site-packages is in path
-ENV PYTHONPATH="${HOME}/.local/lib/python3.12/site-packages:$PYTHONPATH"
-ENV PATH="${HOME}/.local/bin:$PATH"
-
-CMD ["langflow", "run", "--host", "0.0.0.0", "--port", "7860"]
+USER user
+CMD ["/startup.sh"]
