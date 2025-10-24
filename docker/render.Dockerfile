@@ -1,9 +1,8 @@
 FROM langflowai/langflow:latest
+USER user
 
-# Create a startup script
-USER root
-RUN echo '#!/bin/bash\n\
-pip install --user --no-cache-dir \
+# Install packages to user site-packages
+RUN pip install --user --no-cache-dir \
     pymysql \
     mysql-connector-python \
     snowflake-connector-python[pandas] \
@@ -11,9 +10,10 @@ pip install --user --no-cache-dir \
     matplotlib \
     seaborn \
     pandas \
-    cryptography\n\
-exec langflow run --host 0.0.0.0 --port 7860' > /startup.sh && \
-    chmod +x /startup.sh
+    cryptography
 
-USER user
-CMD ["/startup.sh"]
+# Set the correct PYTHONPATH for this specific container
+ENV PYTHONPATH="/app/data/.local/lib/python3.12/site-packages:$PYTHONPATH"
+ENV PATH="/app/data/.local/bin:$PATH"
+
+CMD ["langflow", "run", "--host", "0.0.0.0", "--port", "7860"]
