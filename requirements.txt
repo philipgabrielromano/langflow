@@ -1,0 +1,9 @@
+langflow
+pymysql
+mysql-connector-python
+snowflake-connector-python[pandas]
+langchain-pinecone
+matplotlib
+seaborn
+pandas
+cryptography
