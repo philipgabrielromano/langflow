@@ -1,4 +1,3 @@
-langflow
 mysql-connector-python==8.2.0
 snowflake-connector-python[pandas]==3.5.0
 matplotlib==3.8.2
