@@ -3,4 +3,4 @@ snowflake-connector-python[pandas]==3.5.0
 matplotlib==3.8.2
 seaborn==0.13.0
 pandas
-cryptography==41.0.7
+cryptography==46.0.5
